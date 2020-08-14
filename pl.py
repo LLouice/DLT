@@ -166,7 +166,7 @@ def main(config):
             # "Inspect results"
             # fig = lr_finder.plot(); fig.show(); fig.savefig("lr_finder.png")
             suggested_lr = lr_finder.suggestion()
-            logger.inof("suggested_lr: ", suggested_lr)
+            logger.info("suggested_lr: ", suggested_lr)
         else:
             trainer.fit(model)
             logger.info("training finish!")
