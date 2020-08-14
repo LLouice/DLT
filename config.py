@@ -50,7 +50,7 @@ parser.add_argument("--test",
                     type=str,
                     default="false",
                     choices=["true", "false"])
-parser.add_argument("--log_file", type=str, default="runs/logs/train.log")
+parser.add_argument("--log_file", type=str, default="runs/logs/train")
 parser.add_argument("--log_level",
                     type=str,
                     choices=["info", "debug", "warning"],
@@ -91,6 +91,4 @@ config, _ = parser.parse_known_args()
 _convert(config)
 
 if __name__ == "__main__":
-    print(config)
-    config.__dict__.update({"lr": 1})
     print(config)
