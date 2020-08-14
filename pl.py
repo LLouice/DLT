@@ -169,7 +169,7 @@ def main(config):
             logger.info("suggested_lr: ", suggested_lr)
         else:
             trainer.fit(model)
-            logger.info("training finish!")
+            logger.success("training finish!")
             trainer.test()
 
     train()
