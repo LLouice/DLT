@@ -52,7 +52,7 @@ class Net(pl.LightningModule):
     def test_dataloader(self):
         pass
 
-    def forward(self, e1, r):
+    def forward(self, x):
         pass
 
     def training_step(self, batch, batch_idx):
