@@ -37,7 +37,7 @@ class Net(pl.LightningModule):
             # self.model =
             pass
 
-    def forward(self, e1, r):
+    def forward(self, x):
         pass
 
     # def _my_reduct_fx(self, all_train_loss):
@@ -87,7 +87,7 @@ class Net(pl.LightningModule):
 
         result.a_prediction = None
 
-        result.log("val_acc",
+        result.log("val/acc",
                    acc,
                    prog_bar=False,
                    logger=True,
@@ -100,7 +100,7 @@ class Net(pl.LightningModule):
                    sync_dist=False,
                    sync_dist_op='mean',
                    sync_dist_group=None)
-        values = dict(val_metric=None)
+        values = {"val/metirc": None}
         result.log_dict(values,
                         prog_bar=False,
                         logger=True,
@@ -123,7 +123,10 @@ class Net(pl.LightningModule):
 
     def test_step(self, batch, batch_idx):
         result = self.validation_step(batch, batch_idx)
-        result.rename_keys({"val_acc":"test_acc", "val_metric":"test_metric")
+        result.rename_keys({
+            "val/acc": "test/acc",
+            "val/metric": "test/metric"
+        })
         return result
 
     def test_epoch_end(self, outputs):
