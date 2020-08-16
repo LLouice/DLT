@@ -3,12 +3,14 @@ from torch.utils.data import DataLoader
 
 
 class DataModule(LightningDataModule):
-    def __init__(self, config):
+    def __init__(self, config, logger):
         super().__init__()
         self.config = config
+        self.logger = logger
 
-    def prepare_data(self, *args, **kwargs):
-        pass
+    def prepare_data(self):
+        self.logger.info(".... prepare_data ....")
+        self.logger.info(".... prepare_data done! ....")
 
     def setup(self, stage):
         if stage == "fit" or stage is None:
