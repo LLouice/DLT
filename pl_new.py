@@ -40,10 +40,10 @@ class Net(pl.LightningModule):
     def forward(self, x):
         pass
 
-    # def _my_reduct_fx(self, all_train_loss):
+    # def _my_reduce_fx(self, all_train_loss):
     #     # "reducde somehow"
     #     result = None
-    #     return resut
+    #     return result
 
     def training_step(self, batch, batch_idx):
         loss = None

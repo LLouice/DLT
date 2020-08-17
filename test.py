@@ -7,7 +7,7 @@ def test_template():
     logger = get_logger(config)
     logger.info("this is a info")
     logger.debug(
-        "from test template so mamy balabala balabala........................."
+        "from test template so many balabala balabala........................."
     )
     logger.error("this is a error!")
     # tc = time.perf_counter()
