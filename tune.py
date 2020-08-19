@@ -1,6 +1,8 @@
-import torch
-import torch.nn as nn
+import sys
+import os
+import time
 
+import torch
 import pytorch_lightning as pl
 from pytorch_lightning import Trainer, seed_everything
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping  # , LearningRateLogger
@@ -16,9 +18,7 @@ from ray.tune.utils import pin_in_object_store, get_pinned_object
 from pytorch_lightning.utilities.cloud_io import load as pl_load
 from functools import partial
 
-import sys
-import os
-import time
+
 from config import config
 from utils import get_logger
 

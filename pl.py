@@ -1,3 +1,7 @@
+import sys
+import os
+import time
+
 import torch
 import pytorch_lightning as pl
 from pytorch_lightning import Trainer, seed_everything
@@ -5,9 +9,6 @@ from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping  # , Lear
 from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.callbacks import Callback
 
-import sys
-import os
-import time
 from config import config
 from utils import get_logger
 

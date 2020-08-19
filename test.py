@@ -1,6 +1,6 @@
+import time
 from config import config
 from utils import get_logger
-import time
 
 
 def test_template():

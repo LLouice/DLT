@@ -1,5 +1,5 @@
-from pytorch_lightning import LightningDataModule
 from torch.utils.data import DataLoader
+from pytorch_lightning import LightningDataModule
 
 
 class DataModule(LightningDataModule):
