@@ -21,7 +21,7 @@ from functools import partial
 from config import config
 from utils import get_logger
 from data import DataModule
-from net import Net
+from net_new import Net
 
 logger = get_logger(config)
 
