@@ -151,7 +151,6 @@ class Net(pl.LightningModule):
 
 def main(config):
     logger.info(" ".join(sys.argv))
-    logger.info(" ".join(sys.argv))
 
     dm = DataModule(config, logger)
     dm.prepare_data()
