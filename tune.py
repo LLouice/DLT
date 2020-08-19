@@ -3,7 +3,6 @@ import os
 import time
 
 import torch
-import pytorch_lightning as pl
 from pytorch_lightning import Trainer, seed_everything
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping  # , LearningRateLogger
 from pytorch_lightning.loggers import TensorBoardLogger
@@ -18,9 +17,9 @@ from ray.tune.utils import pin_in_object_store, get_pinned_object
 from pytorch_lightning.utilities.cloud_io import load as pl_load
 from functools import partial
 
-
 from config import config
 from utils import get_logger
+from net import Net
 
 logger = get_logger(config)
 
@@ -64,89 +63,6 @@ class TimeCallback(Callback):
     def on_epoch_end(self, trainer, pl_module):
         logger.debug(f"Elapsed Time {time.perf_counter()-self.tc:.4f}")
         self.tc = time.perf_counter()
-
-
-class Net(pl.LightningModule):
-    def __init__(self, hparams):
-        super(Net, self).__init__()
-        self.hparams = hparams
-
-        # "init model"
-        hp = self.hparams
-        if hp.model == "Model0":
-            # self.model =
-            pass
-
-    def prepare_data(self):
-        logger.info(".... prepare_data ....")
-        logger.info(".... prepare_data done! ....")
-
-    def setup(self, stage):
-        pass
-
-    def train_dataloader(self):
-        pass
-
-    def val_dataloader(self):
-        pass
-
-    def test_dataloader(self):
-        pass
-
-    def forward(self, x):
-        pass
-
-    def training_step(self, batch, batch_idx):
-        loss = None
-        return {"loss": loss, "log": {"train/loss": loss.detach().item()}}
-
-    def _dev_setp(self, batch, batch_idx, mode="val"):
-        loss = None
-        if mode == "val":
-            pass
-        else:
-            pass
-        return dict(log={"{}/loss".format(mode): loss.detach()})
-
-    def _dev_epoch_end(self, outputs):
-        log = dict()
-        return log
-
-    def validation_step(self, batch, batch_idx):
-        return self._dev_setp(batch, batch_idx, mode="val")
-
-    def validation_epoch_end(self, outputs):
-        res = self._dev_epoch_end(outputs)
-        tb_log = {}
-        for k, v in res.items():
-            tb_log["val/" + k] = v
-        logger.info(tb_log)
-        return dict(log=tb_log)
-
-    def test_step(self, batch, batch_idx):
-        return self._dev_setp(batch, batch_idx, mode="test")
-
-    def test_epoch_end(self, outputs):
-        res = self._dev_epoch_end(outputs)
-        tb_log = {}
-        for k, v in res.items():
-            tb_log["test/" + k] = v
-        return dict(log=tb_log)
-
-    def configure_optimizers(self):
-        if self.hparams.opt == "adamw":
-            return torch.optim.AdamW(self.parameters(),
-                                     lr=self.hparams.lr,
-                                     weight_decay=self.hparams.wd)
-        elif self.hparams.opt == "adam":
-            return torch.optim.Adam(self.parameters(),
-                                    lr=self.hparams.lr,
-                                    weight_decay=self.hparams.wd)
-        elif self.hparams.opt == "sgd":
-            return torch.optim.SGD(self.parameters(),
-                                   lr=self.hparams.lr,
-                                   weight_decay=self.hparams.wd,
-                                   momentum=0.9)
 
 
 def main(config):
@@ -223,7 +139,7 @@ def main(config):
                 logger.warning("use workaroud")
             trainer.current_epoch = ckpt["epoch"]
         else:
-            model = Net(config)
+            model = Net(config, logger)
 
         trainer.fit(model, dl_trn, dl_val)
         logger.info("training finish!")

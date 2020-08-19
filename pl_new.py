@@ -3,7 +3,6 @@ import os
 import time
 
 import torch
-import pytorch_lightning as pl
 from pytorch_lightning import Trainer, TrainResult, EvalResult, seed_everything
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping  # , LearningRateLogger
 from pytorch_lightning.loggers import TensorBoardLogger
@@ -12,6 +11,7 @@ from pytorch_lightning.callbacks import Callback
 from config import config
 from utils import get_logger
 from data import DataModule
+from net import Net
 
 logger = get_logger(config)
 
@@ -159,7 +159,7 @@ def main(config):
     logger.info(f"{'='*42} \n\t {config} \n\t {'='*42}")
 
     def train():
-        model = Net(config)
+        model = Net(config, logger)
 
         # "checkpoint"
         checkpoint_callback = ModelCheckpoint(
