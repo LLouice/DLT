@@ -5,6 +5,7 @@ from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping  # , Lear
 from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.callbacks import Callback
 
+import sys
 import os
 import time
 from config import config
@@ -149,10 +150,12 @@ class Net(pl.LightningModule):
 
 
 def main(config):
-    logger.info(f"{'='*42} \n\t {config} \n\t {'='*42}")
+    logger.info(" ".join(sys.argv))
 
     dm = DataModule(config, logger)
     dm.prepare_data()
+
+    logger.info(f"{'='*42} \n\t {config} \n\t {'='*42}")
 
     def train():
         model = Net(config)
