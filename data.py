@@ -12,7 +12,7 @@ class DataModule(LightningDataModule):
         self.logger.info(".... prepare_data ....")
         self.logger.info(".... prepare_data done! ....")
 
-    def setup(self, stage):
+    def setup(self, stage=None):
         if stage == "fit" or stage is None:
             self.ds_trn = None
             self.ds_val = None
