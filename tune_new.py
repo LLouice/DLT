@@ -192,7 +192,7 @@ def main(config):
     logger.info(" ".join(sys.argv))
     logger.info(f"{'='*42} \n\t {config} \n\t {'='*42}")
 
-    dm = DataModule(config, logger)
+    dm = DataModule(config)
     dm.prepare_data()
     dm.setup()
 

@@ -3,14 +3,15 @@ from pytorch_lightning import LightningDataModule
 
 
 class DataModule(LightningDataModule):
-    def __init__(self, config, logger):
+    def __init__(self, config, logger=None):
         super().__init__()
         self.config = config
         self.logger = logger
 
     def prepare_data(self):
-        self.logger.info(".... prepare_data ....")
-        self.logger.info(".... prepare_data done! ....")
+        if self.logger is not None:
+            self.logger.info(".... prepare_data ....")
+            self.logger.info(".... prepare_data done! ....")
 
     def setup(self, stage=None):
         if stage == "fit" or stage is None:
