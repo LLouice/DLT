@@ -14,7 +14,6 @@ import ray
 from ray import tune
 from ray.tune import CLIReporter
 from ray.tune.schedulers import ASHAScheduler, PopulationBasedTraining
-from ray.tune.utils import pin_in_object_store, get_pinned_object
 from pytorch_lightning.utilities.cloud_io import load as pl_load
 from functools import partial
 
@@ -75,16 +74,16 @@ def main(config):
     dm.prepare_data()
     dm.setup()
 
-    dm_id = pin_in_object_store(dm)
+    dm_id = ray.put(dm)
     logger.info("pin dm done!")
 
     # dl_trn, dl_val, dl_test = dm.dl_trn, dm.dl_val, dm.dl_test
 
-    # dl_trn_id = pin_in_object_store(dl_trn)
+    # dl_trn_id = ray.get(dl_trn)
     # logger.info("pin trn done!")
-    # dl_val_id = pin_in_object_store(dl_val)
+    # dl_val_id = ray.get(dl_val)
     # logger.info("pin val done!")
-    # dl_test_id = pin_in_object_store(dl_test)
+    # dl_test_id = ray.get(dl_test)
     # logger.info("pin test done!")
     # logger.info("pin object done!")
 
@@ -93,10 +92,10 @@ def main(config):
         checkpoint_dir=None,
     ):
         # "get pin data"
-        dm = get_pinned_object(dm_id)
-        # dl_trn = get_pinned_object(dl_trn_id)
-        # dl_val = get_pinned_object(dl_val_id)
-        # dl_test = get_pinned_object(dl_test_id)
+        dm = ray.get(dm_id)
+        # dl_trn = ray.get(dl_trn_id)
+        # dl_val = ray.get(dl_val_id)
+        # dl_test = ray.get(dl_test_id)
 
         # "tensorboard logger"
         tb_logger = TensorBoardLogger("runs/logs", name="", version=".")
