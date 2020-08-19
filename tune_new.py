@@ -222,7 +222,7 @@ def main(config):
         # "tensorboard logger"
         tb_logger = TensorBoardLogger("runs/logs", name="", version=".")
 
-        early_stopping = EarlyStopping(monitor='val_accc',
+        early_stopping = EarlyStopping(monitor='val_acc',
                                        patience=5,
                                        strict=False,
                                        verbose=False,
