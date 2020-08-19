@@ -16,6 +16,7 @@ from ray.tune.utils import pin_in_object_store, get_pinned_object
 from pytorch_lightning.utilities.cloud_io import load as pl_load
 from functools import partial
 
+import sys
 import os
 import time
 from config import config
@@ -189,6 +190,7 @@ class Net(pl.LightningModule):
 
 
 def main(config):
+    logger.info(" ".join(sys.argv))
     logger.info(f"{'='*42} \n\t {config} \n\t {'='*42}")
 
     dm = DataModule(config, logger)
