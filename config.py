@@ -19,8 +19,13 @@ parser.add_argument('--opt',
                     type=str,
                     choices=["adam", "adamw", "sgd"],
                     default="adamw")
+# 'dataloader
 parser.add_argument("--bs", type=int, default=128)
 parser.add_argument("--bs_dev", type=int, default=512)
+parser.add_argument("--nw0", type=int, default=4)
+parser.add_argument("--nw1", type=int, default=8)
+
+# 'device'
 parser.add_argument("--gpus", type=str, default="0")
 parser.add_argument("--nogpu",
                     type=str,
@@ -30,18 +35,8 @@ parser.add_argument("--tpu",
                     type=str,
                     default="false",
                     choices=["true", "false"])
-parser.add_argument("--lr_find",
-                    type=str,
-                    default="false",
-                    choices=["true", "false"])
-parser.add_argument("--model",
-                    type=str,
-                    choices=["Model0", "Model1"],
-                    default="Model0")
-parser.add_argument("--check_val", type=int, default=5)
 
-# "program params"
-parser.add_argument("--data_pt", type=str, default="data/data.h5")
+# 'trick'
 parser.add_argument("--dbg",
                     type=str,
                     default="false",
@@ -50,15 +45,18 @@ parser.add_argument("--test",
                     type=str,
                     default="false",
                     choices=["true", "false"])
-parser.add_argument("--log_file", type=str, default="runs/logs/train")
-parser.add_argument("--log_level",
+parser.add_argument("--lr_find",
                     type=str,
-                    choices=["info", "debug", "warning"],
-                    default="debug")
-parser.add_argument("--pb_rate", type=int, default=20)
-parser.add_argument("--nw0", type=int, default=4)
-parser.add_argument("--nw1", type=int, default=8)
+                    default="false",
+                    choices=["true", "false"])
 
+# 'eval'
+parser.add_argument("--check_val", type=int, default=5)
+
+# 'other'
+parser.add_argument("--pb_rate", type=int, default=20)
+
+# 'tune'
 parser.add_argument("--tune_name", type=str, default="tune_0")
 parser.add_argument("--tune_schd",
                     type=str,
@@ -71,7 +69,19 @@ parser.add_argument("--tune_gups", type=str, default="0,1")
 parser.add_argument("--tune_per_cpu", type=float, default=4)
 parser.add_argument("--tune_per_gpu", type=float, default=0.5)
 
+# "program params"
+parser.add_argument("--data_pt", type=str, default="data/data.h5")
+parser.add_argument("--log_file", type=str, default="runs/logs/train")
+parser.add_argument("--log_level",
+                    type=str,
+                    choices=["info", "debug", "warning"],
+                    default="debug")
+
 # "model params"
+parser.add_argument("--model",
+                    type=str,
+                    choices=["Model0", "Model1"],
+                    default="Model0")
 
 
 def _bool(x):
