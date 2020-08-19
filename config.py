@@ -1,4 +1,5 @@
 import argparse
+import sys
 
 parser = argparse.ArgumentParser()
 
@@ -97,8 +98,14 @@ def _convert(config):
             config.__dict__[k] = None
 
 
+def _add_log_prefix(config):
+    prefix = "_".join([arg[2:] for arg in sys.argv[1:]])
+    config.log_file += "_{}".format(prefix)
+
+
 config, _ = parser.parse_known_args()
 _convert(config)
+_add_log_prefix(config.log_file)
 
 if __name__ == "__main__":
     print(config)
